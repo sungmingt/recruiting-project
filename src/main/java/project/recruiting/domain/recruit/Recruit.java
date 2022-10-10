@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import java.util.Optional;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -23,7 +24,7 @@ public class Recruit {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)  ////
+    @ManyToOne(fetch = LAZY, cascade = PERSIST)  ////
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -39,9 +40,21 @@ public class Recruit {
         this.tool = tool;
     }
 
+    public Recruit(Company company, String position, Long reward, String content, String tool) {
+        this.company = company;
+        this.position = position;
+        this.reward = reward;
+        this.content = content;
+        this.tool = tool;
+    }
 
     //=========================
 
+
+    public void setCompany(Company company) {
+        this.company = company;
+        company.getRecruitList().add(this);
+    }
 
     public void update(String position, Long reward, String content, String tool) {
 

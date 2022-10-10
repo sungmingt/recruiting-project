@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.recruiting.domain.company.entity.Company;
+import project.recruiting.domain.company.service.CompanyService;
 import project.recruiting.domain.recruit.Recruit;
 import project.recruiting.domain.recruit.repository.RecruitRepository;
 import project.recruiting.web.recruit.dto.request.ApplyRequest;
@@ -28,16 +30,19 @@ import static project.recruiting.web.recruit.dto.response.UpdateResponse.*;
 public class RecruitService {
 
     private final RecruitRepository recruitRepository;
-
+    private final CompanyService companyService;
 
     /**
      * 등록
      */
     public RegisterResponse register(RegisterRequest request) {
 
+        Company company = companyService.findCompany(request.getCompanyId());
         Recruit recruit = request.toEntity();
-        Recruit saved = recruitRepository.save(recruit);
 
+        recruit.setCompany(company);
+
+        Recruit saved = recruitRepository.save(recruit);
         return toRegisterResponse(saved);
     }
 
