@@ -1,14 +1,13 @@
-package project.recruiting.web.recruit.dto;
+package project.recruiting.web.recruit.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor @AllArgsConstructor
-public class MultiResponse<T> {
+public class ApplyRequest {
 
-    private List<T> data;
+    private Long recruitId;
+    private Long userIdl;
 }

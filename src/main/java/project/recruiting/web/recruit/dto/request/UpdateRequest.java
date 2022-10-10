@@ -1,4 +1,4 @@
-package project.recruiting.web.recruit.dto;
+package project.recruiting.web.recruit.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,9 +6,10 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor
-public class UpdateResponse {
+public class UpdateRequest {
+
     private String position;
-    private String reward;
+    private Long reward;
     private String content;
     private String tool;
 }
