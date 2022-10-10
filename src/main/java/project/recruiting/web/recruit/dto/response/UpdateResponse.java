@@ -3,7 +3,7 @@ package project.recruiting.web.recruit.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.recruiting.domain.recruit.Recruit;
+import project.recruiting.domain.recruit.entity.Recruit;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor

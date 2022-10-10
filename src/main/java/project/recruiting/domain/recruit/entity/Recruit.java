@@ -1,4 +1,4 @@
-package project.recruiting.domain.recruit;
+package project.recruiting.domain.recruit.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

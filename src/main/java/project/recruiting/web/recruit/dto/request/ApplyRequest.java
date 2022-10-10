@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 public class ApplyRequest {
 
     private Long recruitId;
-    private Long userIdl;
+    private Long userId;
 }
