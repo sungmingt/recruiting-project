@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.recruiting.domain.company.entity.Company;
+import project.recruiting.domain.member.entity.Member;
 
 import javax.persistence.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static javax.persistence.CascadeType.*;
@@ -27,6 +29,9 @@ public class Recruit {
     @ManyToOne(fetch = LAZY, cascade = PERSIST)  ////
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany
+    private List<Member> memberList;
 
     private String position;
     private Long reward;
