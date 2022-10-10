@@ -1,11 +1,20 @@
 package project.recruiting.web.recruit.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import project.recruiting.web.recruit.dto.*;
+import project.recruiting.domain.recruit.service.RecruitService;
+import project.recruiting.web.recruit.dto.request.ApplyRequest;
+import project.recruiting.web.recruit.dto.request.RegisterRequest;
+import project.recruiting.web.recruit.dto.request.UpdateRequest;
+import project.recruiting.web.recruit.dto.response.*;
+
+import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class RecruitController {
 
+    private final RecruitService recruitService;
 
     /**
      * 채용공고 등록
@@ -13,10 +22,7 @@ public class RecruitController {
      */
     @PostMapping
     public RegisterResponse register(@RequestBody RegisterRequest request) {
-
-        recruitService.register(request);
-
-        return new RegisterResponse();
+        return recruitService.register(request);
     }
 
     /**
@@ -26,9 +32,7 @@ public class RecruitController {
     @PostMapping("/{recruitId}")
     public UpdateResponse update(@PathVariable long recruitId,
                                  @RequestBody UpdateRequest request) {
-
-        recruitService.update(request);
-        return new UpdateResponse();
+        return recruitService.update(recruitId, request);
     }
 
     /**
@@ -47,10 +51,10 @@ public class RecruitController {
      * @return recruit_id, company_name, country, city, position, reward, tool
      */
     @GetMapping
-    public ListResponse getList() {
+    public MultiResponse getList() {
 
-        recruitService.getList();
-        return new MultiResponse(listResponse);
+        List<ListResponse> response = recruitService.getList();
+        return new MultiResponse(response);
     }
 
     /**
@@ -61,8 +65,10 @@ public class RecruitController {
     public ListResponse search(@RequestParam String content) {  //todo : 검색 조건 추가
 
         recruitService.search(content);
-        return new MultiResponse(listResponse);
+//        return new MultiResponse(listResponse);
+        return new ListResponse();
     }
+
 
     /**
      * 채용공고 상세 페이지
@@ -70,9 +76,7 @@ public class RecruitController {
      */
     @GetMapping("/{recruitId}")
     public SingleResponse getSingle(@PathVariable long recruitId) {
-
-        recruitService.getSingle(recruitId);
-        return new SingleResponse;
+        return recruitService.getSingle(recruitId);
     }
 
     /**
@@ -80,7 +84,7 @@ public class RecruitController {
      * @require recruit_id, user_id
      */
     @PostMapping("/apply")
-    public String apply(@RequestBody ApplyDto applyDto) {
+    public String apply(@RequestBody ApplyRequest applyDto) {
 
         recruitService.apply(applyDto);
         return "지원 등록 되었습니다!";
