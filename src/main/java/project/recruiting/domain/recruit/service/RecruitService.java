@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.recruiting.domain.company.entity.Company;
 import project.recruiting.domain.company.service.CompanyService;
-import project.recruiting.domain.recruit.Recruit;
+import project.recruiting.domain.member.entity.Member;
+import project.recruiting.domain.member.service.MemberService;
+import project.recruiting.domain.recruit.entity.Recruit;
 import project.recruiting.domain.recruit.repository.RecruitRepository;
 import project.recruiting.web.recruit.dto.request.ApplyRequest;
 import project.recruiting.web.recruit.dto.request.RegisterRequest;
@@ -31,6 +33,7 @@ public class RecruitService {
 
     private final RecruitRepository recruitRepository;
     private final CompanyService companyService;
+    private final MemberService memberService;
 
     /**
      * 등록
@@ -51,8 +54,7 @@ public class RecruitService {
      */
     public UpdateResponse update(long recruitId, UpdateRequest request) {
 
-        Recruit recruit = recruitRepository.findById(recruitId)
-                .orElseThrow(() -> new RuntimeException("해당 채용공고가 존재하지 않습니다."));  //todo : -> custom exception
+        Recruit recruit = findById(recruitId);
 
         recruit.update(request.getPosition(), request.getReward(), request.getContent(), request.getTool());
         return toUpdateResponse(recruit);
@@ -76,27 +78,24 @@ public class RecruitService {
     /**
      * 검색
      * @param content
-     * @return
      */
     @Transactional(readOnly = true)
-    public ListResponse search(String content) { //todo : 검색 조건 여러개 적용 여부
+    public List<ListResponse> search(String content) { //todo : 검색 조건 여러개 적용 여부
 
-
-        return new ListResponse();
+        List<Recruit> recruitList = recruitRepository.search(content);
+        return toListResponse(recruitList);
     }
 
     /**
      * 상세
      * @param recruitId
-     * @return
      */
     @Transactional(readOnly = true)  //todo : fetch join
     public SingleResponse getSingle(long recruitId) {
 
-        Recruit recruit = recruitRepository.findById(recruitId)
-                .orElseThrow(() -> new RuntimeException("해당 채용공고가 존재하지 않습니다."));  //todo : custom exception
-
+        Recruit recruit = findById(recruitId);
         List<Long> others = recruitRepository.findByCompanyId(recruit.getCompany().getId());
+
         return toSingleResponse(recruit, others);
     }
 
@@ -106,6 +105,21 @@ public class RecruitService {
      */
     public void apply(ApplyRequest applyDto) {
 
+        Member member = memberService.findMember(applyDto.getUserId());
 
+        if (member.getRecruit() != null) {
+            throw new RuntimeException("이미 지원하신 채용공고가 존재합니다.");
+        }
+
+        Recruit recruit = findById(applyDto.getRecruitId());
+        member.setRecruit(recruit); //dirty check
+    }
+
+    /**
+     * 조회 재사용 메서드
+     */
+    private Recruit findById(Long recruitId) {
+        return recruitRepository.findById(recruitId)
+                .orElseThrow(() -> new RuntimeException("해당 채용공고가 존재하지 않습니다.")); //todo : custom exception
     }
 }
