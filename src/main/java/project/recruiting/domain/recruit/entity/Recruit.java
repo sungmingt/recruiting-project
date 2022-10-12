@@ -8,9 +8,10 @@ import project.recruiting.domain.member.entity.Member;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import static java.util.Optional.*;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -30,7 +31,7 @@ public class Recruit {
     private Company company;
 
     @OneToMany(mappedBy = "recruit")
-    private List<Member> memberList;
+    private List<Member> memberList = new ArrayList<>();
 
     private String position;
     private Long reward;
@@ -63,7 +64,6 @@ public class Recruit {
 
     //=========================
 
-
     public void setCompany(Company company) {
         this.company = company;
         company.getRecruitList().add(this);
@@ -71,13 +71,13 @@ public class Recruit {
 
     public void update(String position, Long reward, String content, String tool) {
 
-        Optional.ofNullable(position)
+        ofNullable(position)
                 .ifPresent(p -> this.position = p);
-        Optional.ofNullable(reward)
+        ofNullable(reward)
                 .ifPresent(r -> this.reward = r);
-        Optional.ofNullable(content)
+        ofNullable(content)
                 .ifPresent(c -> this.content = c);
-        Optional.ofNullable(tool)
+        ofNullable(tool)
                 .ifPresent(t -> this.tool = t);
     }
 }

@@ -8,10 +8,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import project.recruiting.domain.company.entity.Company;
 import project.recruiting.domain.company.service.CompanyService;
+import project.recruiting.domain.member.entity.Member;
 import project.recruiting.domain.member.service.MemberService;
 import project.recruiting.domain.recruit.entity.Recruit;
 import project.recruiting.domain.recruit.repository.RecruitRepository;
 import project.recruiting.domain.recruit.service.RecruitService;
+import project.recruiting.web.recruit.dto.request.ApplyRequest;
 import project.recruiting.web.recruit.dto.request.RegisterRequest;
 import project.recruiting.web.recruit.dto.request.UpdateRequest;
 import project.recruiting.web.recruit.dto.response.RegisterResponse;
@@ -80,7 +82,8 @@ class RecruitServiceTest {
     }
 
     @DisplayName("채용공고 상세 페이지")
-    @Test               //mock의 단점 : 필드 추가 시 생성자 다 바꿔야 한다!! + 데이터 미리 넣어놓는것도 테스트마다 다 다르다!!! 힘들다!!!
+    @Test
+        //mock의 단점 : 필드 추가 시 생성자 다 바꿔야 한다!! + 데이터 미리 넣어놓는것도 테스트마다 다 다르다!!! 힘들다!!!
     void getSingleTest() {
         //given
         Company company = new Company(1L, "네이버", "한국", "서울");
@@ -102,5 +105,29 @@ class RecruitServiceTest {
         assertThat(response.getContent()).isEqualTo(recruit.getContent());
         assertThat(response.getReward()).isEqualTo(recruit.getReward());
         assertThat(others).containsAll(response.getOthers());
+    }
+
+    @DisplayName("사용자는 1개의 채용공고에만 지원할 수 있다.")
+    @Test
+    void applyRestrictTest() {
+        //given
+        Recruit existing = new Recruit("백엔드 java", 50000L, "java 개발자 채용", "java, spring");
+        Member member = new Member(1L, "김코딩", existing);
+
+        ApplyRequest request = new ApplyRequest(1L, 1L);
+
+        given(memberService.findMember(anyLong()))
+                .willReturn(member);
+
+        //when //then
+        assertThatThrownBy(() -> recruitService.apply(request))
+                .hasMessage("이미 지원하신 채용공고가 존재합니다.");
+
+        assertThat(member.getRecruit().getPosition())
+                .isEqualTo(existing.getPosition());
+
+        assertThat(member.getRecruit().getTool())
+                .isEqualTo(existing.getTool());
+
     }
 }

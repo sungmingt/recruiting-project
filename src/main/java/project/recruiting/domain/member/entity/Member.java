@@ -1,5 +1,6 @@
 package project.recruiting.domain.member.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.recruiting.domain.recruit.entity.Recruit;
@@ -12,6 +13,7 @@ import static javax.persistence.GenerationType.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Member {
 
     @Id
@@ -29,8 +31,11 @@ public class Member {
         this.name = name;
     }
 
-    //==============================
+    public Member(String name) {
+        this.name = name;
+    }
 
+    //==============================
 
     public void setRecruit(Recruit recruit) {
         this.recruit = recruit;
