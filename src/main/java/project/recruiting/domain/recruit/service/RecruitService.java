@@ -13,13 +13,11 @@ import project.recruiting.domain.recruit.repository.RecruitRepository;
 import project.recruiting.web.recruit.dto.request.ApplyRequest;
 import project.recruiting.web.recruit.dto.request.RegisterRequest;
 import project.recruiting.web.recruit.dto.request.UpdateRequest;
-import project.recruiting.web.recruit.dto.response.ListResponse;
-import project.recruiting.web.recruit.dto.response.RegisterResponse;
-import project.recruiting.web.recruit.dto.response.SingleResponse;
-import project.recruiting.web.recruit.dto.response.UpdateResponse;
+import project.recruiting.web.recruit.dto.response.*;
 
 import java.util.List;
 
+import static project.recruiting.web.recruit.dto.response.ApplyResponse.toApplyResponse;
 import static project.recruiting.web.recruit.dto.response.ListResponse.toListResponse;
 import static project.recruiting.web.recruit.dto.response.RegisterResponse.*;
 import static project.recruiting.web.recruit.dto.response.SingleResponse.*;
@@ -101,17 +99,17 @@ public class RecruitService {
 
     /**
      * 지원
-     * @param applyDto
+     * @param request
      */
-    public void apply(ApplyRequest applyDto) {
+    public void apply(ApplyRequest request) {
 
-        Member member = memberService.findMember(applyDto.getUserId());
+        Member member = memberService.findMember(request.getMemberId());
 
         if (member.getRecruit() != null) {
             throw new RuntimeException("이미 지원하신 채용공고가 존재합니다.");
         }
 
-        Recruit recruit = findById(applyDto.getRecruitId());
+        Recruit recruit = findById(request.getRecruitId());
         member.setRecruit(recruit); //dirty check
     }
 

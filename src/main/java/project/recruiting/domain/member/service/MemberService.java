@@ -7,7 +7,7 @@ import project.recruiting.domain.member.entity.Member;
 import project.recruiting.domain.member.repository.MemberRepository;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
