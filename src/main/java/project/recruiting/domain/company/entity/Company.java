@@ -25,6 +25,7 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = REMOVE)
     private List<Recruit> recruitList = new ArrayList<>();
 
+    @Column(unique = true)
     private String name;
     private String country;
     private String city;
