@@ -39,7 +39,6 @@ class RecruitServiceTest {
     @InjectMocks
     private RecruitService recruitService;
 
-
     @DisplayName("채용공고 등록하기")
     @Test
     void registerTest() {
@@ -122,12 +121,7 @@ class RecruitServiceTest {
         //when //then
         assertThatThrownBy(() -> recruitService.apply(request))
                 .hasMessage("이미 지원하신 채용공고가 존재합니다.");
-
-        assertThat(member.getRecruit().getPosition())
-                .isEqualTo(existing.getPosition());
-
-        assertThat(member.getRecruit().getTool())
-                .isEqualTo(existing.getTool());
-
+        assertThat(member.getRecruit().getPosition()).isEqualTo(existing.getPosition());
+        assertThat(member.getRecruit().getTool()).isEqualTo(existing.getTool());
     }
 }
