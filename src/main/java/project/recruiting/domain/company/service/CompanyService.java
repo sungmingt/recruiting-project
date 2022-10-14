@@ -3,8 +3,11 @@ package project.recruiting.domain.company.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.recruiting.config.exception.BusinessException;
 import project.recruiting.domain.company.entity.Company;
 import project.recruiting.domain.company.repository.CompanyRepository;
+
+import static project.recruiting.config.exception.ErrorCode.*;
 
 @Service
 @Transactional
@@ -18,6 +21,6 @@ public class CompanyService {
      */
     public Company findCompany(Long companyId) {
         return companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("해당 기업이 존재하지 않습니다."));
+                .orElseThrow(() -> new BusinessException(COMPANY_NOT_FOUND));
     }
 }

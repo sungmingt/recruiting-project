@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import project.recruiting.config.exception.ErrorCode;
 import project.recruiting.domain.company.entity.Company;
 import project.recruiting.domain.company.service.CompanyService;
 import project.recruiting.domain.member.entity.Member;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
+import static project.recruiting.config.exception.ErrorCode.*;
 
 @ExtendWith(MockitoExtension.class)
 class RecruitServiceTest {
@@ -120,7 +122,7 @@ class RecruitServiceTest {
 
         //when //then
         assertThatThrownBy(() -> recruitService.apply(request))
-                .hasMessage("이미 지원하신 채용공고가 존재합니다.");
+                .hasMessage(ALREADY_APPLIED.getMessage());
         assertThat(member.getRecruit().getPosition()).isEqualTo(existing.getPosition());
         assertThat(member.getRecruit().getTool()).isEqualTo(existing.getTool());
     }

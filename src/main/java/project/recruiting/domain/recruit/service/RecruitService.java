@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.recruiting.config.exception.BusinessException;
 import project.recruiting.domain.company.entity.Company;
 import project.recruiting.domain.company.service.CompanyService;
 import project.recruiting.domain.member.entity.Member;
@@ -17,7 +18,7 @@ import project.recruiting.web.recruit.dto.response.*;
 
 import java.util.List;
 
-import static project.recruiting.web.recruit.dto.response.ApplyResponse.toApplyResponse;
+import static project.recruiting.config.exception.ErrorCode.*;
 import static project.recruiting.web.recruit.dto.response.ListResponse.toListResponse;
 import static project.recruiting.web.recruit.dto.response.RegisterResponse.*;
 import static project.recruiting.web.recruit.dto.response.SingleResponse.*;
@@ -106,7 +107,7 @@ public class RecruitService {
         Member member = memberService.findMember(request.getMemberId());
 
         if (member.getRecruit() != null) {
-            throw new RuntimeException("이미 지원하신 채용공고가 존재합니다.");
+            throw new BusinessException(ALREADY_APPLIED);
         }
 
         Recruit recruit = findById(request.getRecruitId());
@@ -114,10 +115,10 @@ public class RecruitService {
     }
 
     /**
-     * 조회 재사용 메서드
+     * 조회용 메서드
      */
     private Recruit findById(Long recruitId) {
         return recruitRepository.findById(recruitId)
-                .orElseThrow(() -> new RuntimeException("해당 채용공고가 존재하지 않습니다.")); //todo : custom exception
+                .orElseThrow(() -> new BusinessException(RECRUIT_NOT_FOUND));
     }
 }

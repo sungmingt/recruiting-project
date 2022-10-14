@@ -3,8 +3,11 @@ package project.recruiting.domain.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.recruiting.config.exception.BusinessException;
 import project.recruiting.domain.member.entity.Member;
 import project.recruiting.domain.member.repository.MemberRepository;
+
+import static project.recruiting.config.exception.ErrorCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,6 +21,6 @@ public class MemberService {
      */
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다."));
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
 }
