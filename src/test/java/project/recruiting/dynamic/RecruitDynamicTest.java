@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import project.recruiting.config.exception.ErrorCode;
 import project.recruiting.domain.company.entity.Company;
 import project.recruiting.domain.company.repository.CompanyRepository;
 import project.recruiting.domain.member.entity.Member;
@@ -23,7 +24,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static project.recruiting.config.exception.ErrorCode.*;
 
 @SpringBootTest
 class RecruitDynamicTest {
@@ -136,6 +139,16 @@ class RecruitDynamicTest {
 
                     assertThat(findMember.getRecruit().getTool()).isEqualTo("aws");
                     assertThat(findMember.getRecruit().getPosition()).isEqualTo("데브옵스");
+                }),
+
+                dynamicTest("네이버 채용공고 지원 - 중복지원 실패", () -> {
+                    //given
+                    Long memberId = 1L;
+                    Long recruitId = 1L;
+                    ApplyRequest request = new ApplyRequest(recruitId, memberId);
+
+                    //when //then
+                    assertThatThrownBy(() -> recruitService.apply(request)).hasMessage(ALREADY_APPLIED.getMessage());
                 }),
 
                 dynamicTest("네이버 채용공고 삭제", () -> {
