@@ -81,7 +81,7 @@ public class RecruitService {
     @Transactional(readOnly = true)
     public List<ListResponse> search(String content) { //todo : 검색 조건 여러개 적용 여부
 
-        List<Recruit> recruitList = recruitRepository.search(content);
+        List<Recruit> recruitList = recruitRepository.searchByContent(content);
         return toListResponse(recruitList);
     }
 

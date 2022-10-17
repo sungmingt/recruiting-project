@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor @AllArgsConstructor
 public class ApplyRequest {
-
     private Long recruitId;
-    private Long userId;
+    private Long memberId;
 }
