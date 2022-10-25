@@ -6,7 +6,7 @@
 원티드의 채용연계 코스 지원에 필요한 과제를 학습 겸 수행해본 내용입니다.
 명시된 요구사항들을 토대로 API를 구현 완료했고, 이후 여건이 된다면 웹 서비스 API로써의 완성도를 높여갈 생각입니다.
 
-<br><br>
+<br>
 
 ## 과제 요구사항
 
@@ -48,7 +48,7 @@
 
 <img width="558" alt="recruit erd 최종" src="https://user-images.githubusercontent.com/95558880/197238493-a0198727-68fe-48dd-947f-22dfda8d2cd0.png">
 
-**사용자는 1회만 지원 가능하다** 는 요구조건에 따라 회원과 채용공고는 N:1 로 매핑
+**사용자는 1회만 지원 가능하다** 는 요구조건에 따라 회원과 채용공고는 N:1 로 설정했습니다.
 
 <br><br>
 
@@ -72,7 +72,7 @@
 
 <img width="353" alt="happy 2" src="https://user-images.githubusercontent.com/95558880/197231062-85bbc00a-4b29-4935-8809-dcec9bda51a7.png">
 
-단위 테스트(slice test)와 더불어 실제 사용자의 유스케이스 테스트를 위해 dynamic test 추가적으로 실행
+단위 테스트(slice test)와 더불어 실제 사용자의 유스케이스 테스트를 위해 dynamic test 추가적으로 실행했습니다.
 
 
 
