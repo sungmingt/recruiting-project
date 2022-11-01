@@ -3,8 +3,8 @@
 
 <br>
 
-원티드의 채용연계 코스 과제를 학습 겸 수행해본 내용입니다.
-명시된 요구사항들을 토대로 API를 구현 완료했고, 이후 여건이 된다면 완성도를 높여갈 생각입니다.
+원티드의 지난 채용연계 코스 과제를 학습 겸 수행.
+명시된 요구사항들을 토대로 API를 구현 완료했고, 이후 여건이 된다면 완성도를 높여갈 생각.
 
 <br>
 
@@ -31,44 +31,43 @@
 <br><br><br>
 
 
-## 실행 방법 (h2)
+## 📘 실행 방법 (h2)
 
 ```c
-./gradlew bootRun
+./gradlew clean bootRun
 ```
 
-- h2 접속
-
-
+- h2 접속 확인
+http://localhost:8080/h2
 
 <br><br>
 
 
-## ERD
+## 📘 ERD
 
 <img width="558" alt="recruit erd 최종" src="https://user-images.githubusercontent.com/95558880/197238493-a0198727-68fe-48dd-947f-22dfda8d2cd0.png">
 
-**사용자는 1회만 지원 가능하다** 는 요구조건에 따라 회원과 채용공고는 N:1 로 설정
+요구사항 : **사용자는 1회만 지원 가능하다** -> 회원과 채용공고 N:1 관계
 
 <br><br>
 
 
-## API Docs (Swagger)
+## 📘 API Docs (Swagger)
+
+http://localhost:8080/swagger-ui/index.html#/
 
 <img width="1085" alt="recruiting api" src="https://user-images.githubusercontent.com/95558880/197230360-ea06bcb0-ab91-4f8e-bb96-dead1f4d90cd.png">
 
 <br><br>
 
-## 테스트
+## 📘 테스트
 
 ### slice test + dynamic test
 
 <img width="353" alt="happy 2" src="https://user-images.githubusercontent.com/95558880/197231062-85bbc00a-4b29-4935-8809-dcec9bda51a7.png">
 
-단위 테스트(slice test) + 시나리오 테스트 실행
 
-
-
+<br>
 
 
 
