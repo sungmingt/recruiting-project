@@ -1,13 +1,15 @@
-## 기업의 채용을 위한 웹 서비스 API
+
+# 기업의 채용을 위한 웹 서비스 API
 
 <br>
 
-원티드의 프리온보딩 코스 지원에 필요한 과제를 학습 겸 수행해본 내용입니다.
-명시된 요구사항들을 토대로 API를 구현하고, 이후 여건이 된다면 웹 서비스 API로써의 완성도를 높여볼 생각입니다.
+원티드의 지난 채용연계 코스 과제를 학습 겸 수행.
+
+명시된 요구사항들을 토대로 API를 구현 완료했고, 이후 여건이 된다면 완성도를 높여갈 생각.
 
 <br>
 
-## 요구사항
+## 과제 요구사항
 
 ### API
 
@@ -24,18 +26,49 @@
 - 필수 domain : 회사, 사용자, 채용공고, 지원내역(선택사항)
 - 회사, 사용자 등록 절차는 생략 (DB에 임의로 생성하여 진행)
 - 로그인 등 사용자 인증절차(토큰 등)는 생략
-   
+- 사용자는 채용공고에 1회만 지원 가능하다
+
+
+<br><br><br>
+
+
+## 📘 실행 방법 (h2)
+
+```c
+./gradlew clean bootRun
+```
+
+- h2 접속 확인
+http://localhost:8080/h2
+
+<br><br>
+
+
+## 📘 ERD
+
+<img width="558" alt="recruit erd 최종" src="https://user-images.githubusercontent.com/95558880/197238493-a0198727-68fe-48dd-947f-22dfda8d2cd0.png">
+
+요구사항 : **사용자는 1회만 지원 가능하다** -> 회원과 채용공고 N:1 관계
+
+<br><br>
+
+
+## 📘 API Docs (Swagger)
+
+http://localhost:8080/swagger-ui/index.html#/
+
+<img width="1085" alt="recruiting api" src="https://user-images.githubusercontent.com/95558880/197230360-ea06bcb0-ab91-4f8e-bb96-dead1f4d90cd.png">
+
+<br><br>
+
+## 📘 테스트
+
+### slice test + dynamic test
+
+<img width="353" alt="happy 2" src="https://user-images.githubusercontent.com/95558880/197231062-85bbc00a-4b29-4935-8809-dcec9bda51a7.png">
+
+
 <br>
 
-data.sql
-사진
 
-
-
-## 테스트
-### slice test와 dynamic test 구현
-
-<img width="200" alt="happy" src="https://user-images.githubusercontent.com/95558880/196037011-37c7fe8e-2193-4a61-ae3a-ddd9db11a167.png">
-
-기본적인 단위 테스트(slice test)를 구현해본 후, 실제 사용자의 시점에서 테스트 해볼 수 있는 dynamic test를 추가적으로 작성했습니다. 
 
