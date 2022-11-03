@@ -36,13 +36,38 @@
 ```c
 ./gradlew clean bootRun
 ```
-- 애플리케이션 실행 시 ```data.sql```에 입력된 쿼리들이 실행되기 때문에 채용 공고에 대한 API 요청 테스트 
+- 애플리케이션 실행 시 ```data.sql``` 쿼리 실행 -> 바로 채용 API 요청 가능 
 
 - h2 접속 확인
 http://localhost:8080/h2
 
 
+<details>
+<summary><h3>Http Request Example</h3></summary>
+<div markdown="1">
+
+<br>
+
+<h4>채용 공고 등록</h4>
+
+```http request
+POST http://localhost:8080/recruit
+Content-Type : application/json
+
+{
+    "companyId" : 1,
+    "position" : "백엔드",
+    "reward" : 150000,
+    "content" : "백엔드 java 개발자 채용",
+    "tool" : "java, spring, mysql"
+}
+```
+</div>
+</details>
+
+
 <br><br>
+
 
 
 ## 📘 ERD
