@@ -34,7 +34,6 @@ public class RecruitController {
     @Operation(summary = "채용공고 삭제")
     @DeleteMapping("/{recruitId}")
     public String delete(@PathVariable long recruitId) {
-
         recruitService.delete(recruitId);
         return "채용공고가 삭제되었습니다.";
     }
@@ -42,7 +41,7 @@ public class RecruitController {
     @Operation(summary = "채용공고 목록")
     @GetMapping
     public List<ListResponse> getList() {
-        return recruitService.getList();  //todo : 리스트 dto로 한번 더 감싸야 할지
+        return recruitService.getList();
     }
 
     @Operation(summary = "채용공고 검색")
@@ -60,7 +59,6 @@ public class RecruitController {
     @Operation(summary = "채용공고 지원")
     @PostMapping("/apply")
     public String apply(@RequestBody ApplyRequest applyDto) {
-
         recruitService.apply(applyDto);
         return "지원 등록 되었습니다!";
     }
